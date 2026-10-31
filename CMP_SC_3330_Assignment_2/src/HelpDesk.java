@@ -43,7 +43,6 @@ public class HelpDesk {
             assignments.put(technician, techAssignments);
         }
 
-        // Design choice: prevent assigning the same request multiple times to one technician
         if (techAssignments.contains(request)) {
             throw new IllegalStateException("Request #" + requestId + " is already assigned to " + technician.getName());
         }
