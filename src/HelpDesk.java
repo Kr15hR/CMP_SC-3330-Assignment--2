@@ -37,9 +37,12 @@ public class HelpDesk {
             throw new IllegalArgumentException("Request with ID " + requestId + " not found.");
         }
 
-        List<SupportRequest> techAssignments = assignments.computeIfAbsent(technician, k -> new ArrayList<>());
+        List<SupportRequest> techAssignments = assignments.get(technician);
+        if (techAssignments == null) {
+            techAssignments = new ArrayList<>();
+            assignments.put(technician, techAssignments);
+        }
 
-        // Design choice: prevent assigning the same request multiple times to one technician
         if (techAssignments.contains(request)) {
             throw new IllegalStateException("Request #" + requestId + " is already assigned to " + technician.getName());
         }
